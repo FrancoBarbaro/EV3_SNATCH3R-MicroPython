@@ -2,7 +2,6 @@
 
 import logging
 from time import sleep
-"""from smbus import SMBus"""
 
 from ev3dev2.motor import MediumMotor, LargeMotor, SpeedPercent, MoveSteering, OUTPUT_A, OUTPUT_B, OUTPUT_C
 from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3, INPUT_4
@@ -21,12 +20,6 @@ log.info("Starting")
 medium_motor = MediumMotor(OUTPUT_A)
 right_motor = LargeMotor(OUTPUT_B)
 left_motor = LargeMotor(OUTPUT_C)
-"""Pixy2 = LegoPort(INPUT_1)
-Pixy2.mode = 'other-i2c'
-bus = SMBus(3)
-address = 0x54
-sigs = 1
-data = [174, 193, 32, 2, sigs, 1]"""
 touch_sensor = TouchSensor(INPUT_2)
 color_sensor = ColorSensor(INPUT_3)
 infrared_sensor = InfraredSensor(INPUT_4)
@@ -81,8 +74,7 @@ def search():
         reading = abs(infrared_sensor.heading())
         degrees = left_motor.degrees
         if reading != 0 and reading < lowest:
-            log.info("lowest: {:6.2f}, position: {:6.2f}".format(
-                reading, degrees))
+            # log.info("lowest: {:6.2f}, position: {:6.2f}".format(reading, degrees))
             lowest = reading
             position = degrees
             sound.play_tone(frequency=440, duration=0.1)
@@ -103,6 +95,7 @@ def safe_steering(steering: float) -> float:
 
 # Start program
 reset()
+
 starting = True
 while starting or infrared_sensor.distance() == None or infrared_sensor.distance() >= 50:
     starting = False
@@ -116,6 +109,7 @@ while infrared_sensor.distance() > 2:
 steering_drive.off()
 sound.play_file("/home/robot/sounds/Detected.wav",
                 play_type=sound.PLAY_WAIT_FOR_COMPLETE)
+
 steering_drive.on_for_rotations(
     steering=0, speed=SpeedPercent(50), rotations=0.7)
 
