@@ -1,4 +1,4 @@
-# EV3_SNATCH3R-MicroPython
+# EV3_SNATCH3R_MicroPython
 Infrared beacon seeking program for ev3dev2 based on the robot design and program from the 'SNATCH3R' section in "The Lego Mindstorms EV3 Discovery Book" by Laurens Valk
 
 The purpose of the program is to make the EV3 find the infrared remote and grab it with the claw controlled by the medium motor, turn around, release it, and back away. The beacon which is activated by the top button on the infrared remote must be on for the robot to detect the remote.
